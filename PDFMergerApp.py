@@ -53,6 +53,9 @@ class PDFMergerApp:
         )
         self.merge_button.pack(pady=10)
 
+        self.version_label = tk.Label(root, text="Version 1.0.0", font=("Arial", 10))
+        self.version_label.place(x=600, y=530, anchor='se')  # Positioning it at the bottom right
+
         self.dragged_item = None
 
     def center_window(self, width, height):
