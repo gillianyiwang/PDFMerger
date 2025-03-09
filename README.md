@@ -64,6 +64,14 @@ pip install pyinstaller
 pyinstaller --onefile --windowed --icon icons/PDFMerger_icon.icns --name PDF\ Merger PDFMergerApp.py
 ```
 **Windows**
+Uncomment this block of code in `PDFMergerApp.py` before proceeding:
+```python
+# Uncomment the the section after this line for windows deployment
+image_icon = tk.PhotoImage(file = "icons/PDFMerger_icon.png") 
+root.iconphoto(True, image_icon)
+# Uncomment the section before this line for windows deployment
+```
+And then run
 ```bash
 pyinstaller --onefile --windowed --icon icons\PDFMerger_icon.icns --name "PDF Merger" PDFMergerApp.py
 ```
@@ -74,7 +82,7 @@ Explanation of the flags:
 - `--icon`: Specifies the icon to use for the application (make sure to provide the path to a .icns file).
 - `--name`: Sets the name of the executable.
 
-After running the command, the standalone application will be created in the `dist` folder. You can find the PDFMerger executable inside that folder. If you need to distribute the app to others, you can share the .app file found in the dist folder.
+After running the command, the standalone application will be created in the `dist` folder. You can find the PDFMerger executable inside that folder. If you need to distribute the app to others, you can share the `.app` or `.exe.` file found in the dist folder.
 
 
 ## License

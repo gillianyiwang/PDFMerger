@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, PhotoImage
 from PyPDF2 import PdfMerger
 
 
@@ -52,7 +52,7 @@ class PDFMergerApp:
         )
         self.merge_button.pack(pady=10)
 
-        self.version_label = tk.Label(root, text="Version 1.0.0", font=("Arial", 10))
+        self.version_label = tk.Label(root, text="Version 1.0.1", font=("Arial", 10))
         self.version_label.place(x=600, y=530, anchor='se')  # Positioning it at the bottom right
 
         self.dragged_item = None
@@ -122,5 +122,11 @@ class PDFMergerApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
+
+    # # Uncomment the the section after this line for windows deployment
+    # image_icon = tk.PhotoImage(file = "icons/PDFMerger_icon.png") 
+    # root.iconphoto(True, image_icon)
+    # # Uncomment the section before this line for windows deployment
+
     app = PDFMergerApp(root)
     root.mainloop()
