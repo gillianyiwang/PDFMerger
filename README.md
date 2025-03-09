@@ -47,6 +47,29 @@ python PDFMergerApp.py
 
 The application displays an icon in the window and on the taskbar. Ensure the icon file is placed correctly in the project folder, or update the file path as needed.
 
+## Package with PyInstaller 
+### macOS
+To package the app into a standalone executable on macOS, you can use pyinstaller.
+
+**Steps to Deploy:**
+1. Install `pyinstaller` if you haven't already:
+```bash
+pip install pyinstaller
+```
+2. Navigate to the directory where `PDFMergerApp.py` is located.
+3. Run the following command to create a macOS executable:
+```bash
+pyinstaller --onefile --windowed --icon icons/PDFMerger_icon.icns --name PDFMerger PDFMergerApp.py
+```
+Explanation of the flags:
+- `--onefile`: Creates a single executable file.
+- `--windowed`: Prevents a terminal window from opening with the GUI (useful for graphical applications).
+- `--icon`: Specifies the icon to use for the application (make sure to provide the path to a .icns file).
+- `--name`: Sets the name of the executable.
+
+After running the command, the standalone application will be created in the `dist` folder. You can find the PDFMerger executable inside that folder. If you need to distribute the app to others, you can share the .app file found in the dist folder.
+
+
 ## License
 
 This project is open-source and available under the MIT License.
