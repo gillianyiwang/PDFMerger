@@ -2,6 +2,8 @@
 
 A simple GUI application to merge multiple PDF files into one. This app allows users to select PDF files, reorder them via drag-and-drop, and merge them into a single PDF file.
 
+<img src="images/app_screenshot.png" width="500" height="auto">
+
 ## Features
 
 - **Add PDF Files**: Select multiple PDF files to add to the list.
