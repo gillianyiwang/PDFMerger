@@ -2,6 +2,8 @@
 
 A simple GUI application to merge multiple PDF files into one. This app allows users to select PDF files, reorder them via drag-and-drop, and merge them into a single PDF file.
 
+📢 **The latest version of this application is available on the [GitHub Releases](https://github.com/your-repo/releases) page.**  
+
 <img src="images/app_screenshot.png" width="500" height="auto">
 
 ## Features
@@ -47,8 +49,7 @@ python PDFMergerApp.py
 The application displays an icon in the window and on the taskbar. Ensure the icon file is placed correctly in the project folder, or update the file path as needed.
 
 ## Package with PyInstaller 
-### macOS
-To package the app into a standalone executable on macOS, you can use pyinstaller.
+To package the app into a standalone executable on macOS or Windows, you can use pyinstaller.
 
 **Steps to Deploy:**
 1. Install `pyinstaller` if you haven't already:
@@ -56,10 +57,17 @@ To package the app into a standalone executable on macOS, you can use pyinstalle
 pip install pyinstaller
 ```
 2. Navigate to the directory where `PDFMergerApp.py` is located.
-3. Run the following command to create a macOS executable:
+3. Run the following command to create an executable:
+
+**macOS**
 ```bash
 pyinstaller --onefile --windowed --icon icons/PDFMerger_icon.icns --name PDF\ Merger PDFMergerApp.py
 ```
+**Windows**
+```bash
+pyinstaller --onefile --windowed --icon icons\PDFMerger_icon.icns --name "PDF Merger" PDFMergerApp.py
+```
+
 Explanation of the flags:
 - `--onefile`: Creates a single executable file.
 - `--windowed`: Prevents a terminal window from opening with the GUI (useful for graphical applications).
