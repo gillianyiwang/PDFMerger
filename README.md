@@ -17,7 +17,6 @@ A simple GUI application to merge multiple PDF files into one. This app allows u
 - Python 3.x
 - Tkinter (for the GUI)
 - PyPDF2 (for PDF manipulation)
-- Pillow (for handling image icons)
 
 ## Installation
 
@@ -59,7 +58,7 @@ pip install pyinstaller
 2. Navigate to the directory where `PDFMergerApp.py` is located.
 3. Run the following command to create a macOS executable:
 ```bash
-pyinstaller --onefile --windowed --icon icons/PDFMerger_icon.icns --name PDFMerger PDFMergerApp.py
+pyinstaller --onefile --windowed --icon icons/PDFMerger_icon.icns --name PDF\ Merger PDFMergerApp.py
 ```
 Explanation of the flags:
 - `--onefile`: Creates a single executable file.
@@ -73,12 +72,6 @@ After running the command, the standalone application will be created in the `di
 ## License
 
 This project is open-source and available under the MIT License.
-
-## Required Python Libraries
-
-- **Tkinter:** The GUI toolkit used for building the application.
-- **PyPDF2:** Used for merging PDF files.
-- **Pillow:** Used for loading and displaying the application icon.
 
 
 
