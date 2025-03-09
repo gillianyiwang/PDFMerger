@@ -2,7 +2,7 @@
 
 A simple GUI application to merge multiple PDF files into one. This app allows users to select PDF files, reorder them via drag-and-drop, and merge them into a single PDF file.
 
-📢 **The latest version of this application is available on the [GitHub Releases](https://github.com/gillianyiwang/PDFMerger/releases) page.**  
+📢 **The latest version of this application is available on the [GitHub Releases](https://github.com/gillianyiwang/PDFMerger/releases) page.**  This app is available for both **Mac (`.app`)** and **Windows (`.exe`)** as standalone executables.  
 
 <img src="images/app_screenshot.png" width="500" height="auto">
 
