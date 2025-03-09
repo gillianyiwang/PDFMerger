@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PyPDF2 import PdfMerger
+from PIL import Image, ImageTk
 
 
 class PDFMergerApp:
@@ -15,6 +16,11 @@ class PDFMergerApp:
 
         self.frame = tk.Frame(root)
         self.frame.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
+
+        self.instruction_label = tk.Label(
+            root, text="👆👇 Drag files around to adjust the order", font=("Arial", 14)
+        )
+        self.instruction_label.pack(pady=5)
 
         self.scrollbar = tk.Scrollbar(self.frame, orient=tk.VERTICAL)
         self.listbox = tk.Listbox(
@@ -59,7 +65,7 @@ class PDFMergerApp:
     def add_files(self):
         self.root.attributes("-topmost", False)
         files = filedialog.askopenfilenames(filetypes=[("PDF Files", "*.pdf")])
-        self.root.lift() 
+        self.root.lift()
         for file in files:
             if file not in self.file_list:
                 self.file_list.append(file)
@@ -114,5 +120,8 @@ class PDFMergerApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    icon_png = Image.open("PDFMerger_icon.png")  # Replace with your .png file path
+    icon = ImageTk.PhotoImage(icon_png)
+    root.iconphoto(True, icon)
     app = PDFMergerApp(root)
     root.mainloop()
