@@ -1,10 +1,25 @@
 # PDF Merger App
 
+
+<img src="images/app_screenshot.png" width="500" height="auto">
+
 A simple GUI application to merge multiple PDF files into one. This app allows users to select PDF files, reorder them via drag-and-drop, and merge them into a single PDF file.
 
 📢 **The latest version of this application is available on the [GitHub Releases](https://github.com/gillianyiwang/PDFMerger/releases) page.**  This app is available for both **macOS (`.app`)** and **Windows (`.exe`)** as standalone executables.  
 
-<img src="images/app_screenshot.png" width="500" height="auto">
+## ⚠️ Bypass System Warnings
+
+Since this is an open-source application, your operating system may display a warning when you try to run it. Follow the steps below to bypass these warnings:
+
+1. **macOS**
+- Open System Settings and navigate to `Privacy & Security`.
+- Scroll to the bottom, where you'll see a message about the app being blocked.
+- Click `Use Anyway` to allow the app to run.
+- If prompted again when opening the app, click `Open`.
+2. **Windows**
+- When launching the .exe, a warning may appear: `Windows protected your PC. Microsoft Defender SmartScreen prevented an unrecognized app from starting`.
+- Click `More info`.
+- Click `Run anyway` to start the application.
 
 ## Features
 
