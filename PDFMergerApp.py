@@ -17,7 +17,7 @@ class PDFMergerApp:
         self.frame.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
         self.instruction_label = tk.Label(
-            root, text="👆👇 Drag files around to adjust the order", font=("Arial", 14)
+            root, text="👆👇 Drag the files to adjust their order", font=("Arial", 14)
         )
         self.instruction_label.pack(pady=5)
 
@@ -52,8 +52,10 @@ class PDFMergerApp:
         )
         self.merge_button.pack(pady=10)
 
-        self.version_label = tk.Label(root, text="Version 1.0.1", font=("Arial", 10))
-        self.version_label.place(x=600, y=530, anchor='se')  # Positioning it at the bottom right
+        self.version_label = tk.Label(root, text="Version 1.0.2", font=("Arial", 10))
+        self.version_label.place(
+            x=600, y=530, anchor="se"
+        )  # Positioning it at the bottom right
 
         self.dragged_item = None
 
