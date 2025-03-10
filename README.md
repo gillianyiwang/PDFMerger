@@ -1,4 +1,4 @@
-<img align="left" width="50" height="50" src="icons/PDFMerger_icon.png" alt="PDF Merger app icon">
+<img align="left" width="80" height="80" src="icons/PDFMerger_icon.png" alt="PDF Merger app icon">
 
 # &nbsp;PDF Merger
 
