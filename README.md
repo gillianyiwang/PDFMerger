@@ -5,21 +5,17 @@
 
 A simple GUI application to merge multiple PDF files into one. This app allows users to select PDF files, reorder them via drag-and-drop, and merge them into a single PDF file.
 
-📢 **The latest version of this application is available on the [GitHub Releases](https://github.com/gillianyiwang/PDFMerger/releases) page.**  This app is available for both **macOS (`.app`)** and **Windows (`.exe`)** as standalone executables.  
+📢 **The latest version of this application is available on the [GitHub Releases](https://github.com/gillianyiwang/PDFMerger/releases) page.** This app is currently available for **macOS (`.app`)** as standalone executables.
 
 ## ⚠️ Bypass System Warnings
 
 Since this is an open-source application, your operating system may display a warning when you try to run it. Follow the steps below to bypass these warnings:
 
-1. **macOS**
+ **macOS**
 - Open System Settings and navigate to `Privacy & Security`.
 - Scroll to the bottom, where you'll see a message about the app being blocked.
 - Click `Use Anyway` to allow the app to run.
 - If prompted again when opening the app, click `Open`.
-2. **Windows**
-- When launching the .exe, a warning may appear: `Windows protected your PC. Microsoft Defender SmartScreen prevented an unrecognized app from starting`.
-- Click `More info`.
-- Click `Run anyway` to start the application.
 
 ## Features
 
@@ -64,7 +60,7 @@ python PDFMergerApp.py
 The application displays an icon in the window and on the taskbar. Ensure the icon file is placed correctly in the project folder, or update the file path as needed.
 
 ## Package with PyInstaller 
-To package the app into a standalone executable on macOS or Windows, you can use pyinstaller.
+To package the app into a standalone executable, you can use pyinstaller.
 
 **Steps to Deploy:**
 1. Install `pyinstaller` if you haven't already:
@@ -77,18 +73,6 @@ pip install pyinstaller
 **macOS**
 ```bash
 pyinstaller --onefile --windowed --icon icons/PDFMerger_icon.icns --name PDF\ Merger PDFMergerApp.py
-```
-**Windows**
-Uncomment this block of code in `PDFMergerApp.py` before proceeding:
-```python
-# Uncomment the the section after this line for windows deployment
-image_icon = tk.PhotoImage(file = "icons/PDFMerger_icon.png") 
-root.iconphoto(True, image_icon)
-# Uncomment the section before this line for windows deployment
-```
-And then run
-```bash
-pyinstaller --onefile --windowed --icon icons\PDFMerger_icon.icns --name "PDF Merger" PDFMergerApp.py
 ```
 
 Explanation of the flags:

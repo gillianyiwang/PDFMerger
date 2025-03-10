@@ -122,11 +122,5 @@ class PDFMergerApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-
-    # # Uncomment the the section after this line for windows deployment
-    # image_icon = tk.PhotoImage(file = "icons/PDFMerger_icon.png") 
-    # root.iconphoto(True, image_icon)
-    # # Uncomment the section before this line for windows deployment
-
     app = PDFMergerApp(root)
     root.mainloop()

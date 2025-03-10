@@ -35,5 +35,11 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icons\\PDFMerger_icon.ico'],
+    icon=['icons/PDFMerger_icon.icns'],
+)
+app = BUNDLE(
+    exe,
+    name='PDF Merger.app',
+    icon='icons/PDFMerger_icon.icns',
+    bundle_identifier=None,
 )
