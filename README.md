@@ -1,7 +1,10 @@
-# PDF Merger App
+<img align="left" width="110" height="110" src="icons/PDFMerger_icon.png" alt="PDF Merger app icon">
 
+# &nbsp;PDF Merger
 
+$~~~~~~~~~~~$
 <img src="images/app_screenshot.png" width="500" height="auto">
+$~~~~~~~~~~~$
 
 A simple GUI application to merge multiple PDF files into one. This app allows users to select PDF files, reorder them via drag-and-drop, and merge them into a single PDF file.
 
