@@ -17,7 +17,7 @@ Since this is an open-source application, your operating system may display a wa
  **macOS**
 - Open System Settings and navigate to `Privacy & Security`.
 - Scroll to the bottom, where you'll see a message about the app being blocked.
-- Click `Use Anyway` to allow the app to run.
+- Click `Open Anyway` to allow the app to run.
 - If prompted again when opening the app, click `Open`.
 
 ## Features
