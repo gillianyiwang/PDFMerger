@@ -29,7 +29,7 @@ Since this is an open-source application, your operating system may display a wa
 ## Requirements
 
 - Python 3.x
-- Tkinter (for the GUI)
+- PySide6 (for the GUI)
 - PyPDF2 (for PDF manipulation)
 
 ## Installation
