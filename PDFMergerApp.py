@@ -1,128 +1,145 @@
-import tkinter as tk
-from tkinter import filedialog, messagebox, PhotoImage
+import sys
+import platform
+from PySide6.QtWidgets import (
+    QApplication,
+    QWidget,
+    QVBoxLayout,
+    QListWidget,
+    QPushButton,
+    QFileDialog,
+    QMessageBox,
+    QLabel,
+    QHBoxLayout,
+)
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPalette, QColor
 from PyPDF2 import PdfMerger
 
 
-class PDFMergerApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("PDF Merger")
-        self.root.geometry("650x550")
-        self.root.resizable(True, True)
-        self.center_window(650, 550)
+class PDFMergerApp(QWidget):
+    def __init__(self):
+        super().__init__()
 
+        self.setWindowTitle("PDF Merger")
+        self.setGeometry(100, 100, 650, 550)
         self.file_list = []
 
-        self.frame = tk.Frame(root)
-        self.frame.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
+        self.layout = QVBoxLayout()
 
-        self.instruction_label = tk.Label(
-            root, text="👆👇 Drag the files to adjust their order", font=("Arial", 14)
-        )
-        self.instruction_label.pack(pady=5)
+        self.instruction_label = QLabel("👆👇 Drag the files to adjust their order")
+        self.instruction_label.setAlignment(Qt.AlignCenter)
+        self.layout.addWidget(self.instruction_label)
 
-        self.scrollbar = tk.Scrollbar(self.frame, orient=tk.VERTICAL)
-        self.listbox = tk.Listbox(
-            self.frame,
-            selectmode=tk.SINGLE,
-            width=60,
-            height=15,
-            yscrollcommand=self.scrollbar.set,
-        )
-        self.scrollbar.config(command=self.listbox.yview)
+        self.list_widget = QListWidget()
+        self.list_widget.setDragDropMode(QListWidget.InternalMove)
+        self.layout.addWidget(self.list_widget)
 
-        self.listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5)
-        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        button_layout = QHBoxLayout()
 
-        self.listbox.bind("<B1-Motion>", self.drag_item)
-        self.listbox.bind("<ButtonRelease-1>", self.drop_item)
+        self.add_button = QPushButton("Add PDFs")
+        self.add_button.clicked.connect(self.add_files)
+        button_layout.addWidget(self.add_button)
 
-        self.add_button = tk.Button(
-            root, text="Add PDFs", command=self.add_files, height=1
-        )
-        self.add_button.pack(pady=2)
+        self.remove_button = QPushButton("Remove Selected")
+        self.remove_button.clicked.connect(self.remove_selected)
+        button_layout.addWidget(self.remove_button)
 
-        self.remove_button = tk.Button(
-            root, text="Remove Selected", command=self.remove_selected, height=1
-        )
-        self.remove_button.pack(pady=2)
+        self.merge_button = QPushButton("Merge PDFs")
+        self.merge_button.clicked.connect(self.merge_pdfs)
+        button_layout.addWidget(self.merge_button)
 
-        self.merge_button = tk.Button(
-            root, text="Merge PDFs", command=self.merge_pdfs, height=1
-        )
-        self.merge_button.pack(pady=10)
+        self.layout.addLayout(button_layout)
 
-        self.version_label = tk.Label(root, text="Version 1.0.2", font=("Arial", 10))
-        self.version_label.place(
-            x=600, y=530, anchor="se"
-        )  # Positioning it at the bottom right
+        self.version_label = QLabel("Version 1.0.3")
+        self.version_label.setAlignment(Qt.AlignRight)
+        self.layout.addWidget(self.version_label)
 
-        self.dragged_item = None
+        self.setLayout(self.layout)
+        self.center_window()
+        self.apply_system_theme()
 
-    def center_window(self, width, height):
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        x = (screen_width - width) // 2
-        y = (screen_height - height) // 2
-        self.root.geometry(f"{width}x{height}+{x}+{y}")
+    def center_window(self):
+        qr = self.frameGeometry()
+        cp = self.screen().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
     def add_files(self):
-        self.root.attributes("-topmost", False)
-        files = filedialog.askopenfilenames(filetypes=[("PDF Files", "*.pdf")])
-        self.root.lift()
+        files, _ = QFileDialog.getOpenFileNames(
+            self, "Select PDF Files", "", "PDF Files (*.pdf)"
+        )
         for file in files:
             if file not in self.file_list:
                 self.file_list.append(file)
-                self.listbox.insert(tk.END, file)
-
-    def drag_item(self, event):
-        selected_index = self.listbox.curselection()
-        if selected_index:
-            self.dragged_item = selected_index[0]
-
-    def drop_item(self, event):
-        if self.dragged_item is not None:
-            new_index = self.listbox.nearest(event.y)
-            self.file_list.insert(new_index, self.file_list.pop(self.dragged_item))
-            self.listbox.delete(0, tk.END)
-            for file in self.file_list:
-                self.listbox.insert(tk.END, file)
-            self.listbox.select_set(new_index)
-            self.dragged_item = None
+                self.list_widget.addItem(file)
 
     def remove_selected(self):
-        selected_index = self.listbox.curselection()
-        if selected_index:
-            index = selected_index[0]
-            del self.file_list[index]
-            self.listbox.delete(index)
+        selected_items = self.list_widget.selectedItems()
+        if not selected_items:
+            return
+        for item in selected_items:
+            self.file_list.remove(item.text())
+            self.list_widget.takeItem(self.list_widget.row(item))
 
     def merge_pdfs(self):
-        if not self.file_list:
-            messagebox.showerror("Error", "No PDF files selected.")
+        if self.list_widget.count() == 0:
+            QMessageBox.critical(self, "Error", "No PDF files selected.")
             return
 
-        self.root.attributes("-topmost", False)
-        output_path = filedialog.asksaveasfilename(
-            defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")]
+        output_path, _ = QFileDialog.getSaveFileName(
+            self, "Save Merged PDF", "", "PDF Files (*.pdf)"
         )
-        self.root.lift()  # Bring main window back to front
 
         if not output_path:
             return
 
         merger = PdfMerger()
-        for pdf in self.file_list:
-            merger.append(pdf)
+        for index in range(self.list_widget.count()):
+            merger.append(self.list_widget.item(index).text())
 
         merger.write(output_path)
         merger.close()
 
-        self.root.lift()  # Ensure success message is visible
-        messagebox.showinfo("Success", "PDFs merged successfully!")
+        QMessageBox.information(self, "Success", "PDFs merged successfully!")
+
+    def apply_system_theme(self):
+        palette = QPalette()
+        if platform.system() == "Darwin":
+            import subprocess
+
+            mode = subprocess.run(
+                ["defaults", "read", "-g", "AppleInterfaceStyle"], capture_output=True
+            )
+            is_dark = mode.returncode == 0 and "Dark" in mode.stdout.decode()
+        elif platform.system() == "Windows":  # Windows
+            import winreg
+
+            try:
+                key = winreg.OpenKey(
+                    winreg.HKEY_CURRENT_USER,
+                    r"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+                )
+                is_dark = winreg.QueryValueEx(key, "AppsUseLightTheme")[0] == 0
+            except Exception:
+                is_dark = False
+        else:
+            is_dark = False
+
+        if is_dark:
+            palette.setColor(QPalette.Window, QColor(53, 53, 53))
+            palette.setColor(QPalette.WindowText, Qt.white)
+            palette.setColor(QPalette.Base, QColor(35, 35, 35))
+            palette.setColor(QPalette.AlternateBase, QColor(53, 53, 53))
+            palette.setColor(QPalette.Text, Qt.white)
+            palette.setColor(QPalette.Button, QColor(53, 53, 53))
+            palette.setColor(QPalette.ButtonText, Qt.white)
+            palette.setColor(QPalette.Highlight, QColor(142, 45, 197))
+            palette.setColor(QPalette.HighlightedText, Qt.white)
+            QApplication.instance().setPalette(palette)
 
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = PDFMergerApp(root)
-    root.mainloop()
+    app = QApplication(sys.argv)
+    window = PDFMergerApp()
+    window.show()
+    sys.exit(app.exec())
