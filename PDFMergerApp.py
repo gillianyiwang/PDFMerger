@@ -1,5 +1,6 @@
 import sys
 import platform
+import os
 from PySide6.QtWidgets import (
     QApplication,
     QWidget,
@@ -12,7 +13,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
 )
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPalette, QColor
+from PySide6.QtGui import QPalette, QColor, QIcon
 from PyPDF2 import PdfMerger
 
 
@@ -23,6 +24,15 @@ class PDFMergerApp(QWidget):
         self.setWindowTitle("PDF Merger")
         self.setGeometry(100, 100, 650, 550)
         self.file_list = []
+
+        # Select icon based on OS
+        if platform.system() == "Windows":
+            icon_filename = "PDFMerger_icon.ico"
+        else:
+            icon_filename = "PDFMerger_icon.png"
+        icon_path = os.path.join(os.path.dirname(__file__), "icons", icon_filename)
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
 
         self.layout = QVBoxLayout()
 
@@ -140,6 +150,22 @@ class PDFMergerApp(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+
+    # macOS Dock icon support
+    if platform.system() == "Darwin":
+        try:
+            from Foundation import NSBundle
+            from AppKit import NSApplication, NSImage
+            import objc
+
+            icon_path = os.path.join(os.path.dirname(__file__), "icons", "PDFMerger_icon.png")
+            if os.path.exists(icon_path):
+                app_mac = NSApplication.sharedApplication()
+                image = NSImage.alloc().initWithContentsOfFile_(icon_path)
+                app_mac.setApplicationIconImage_(image)
+        except Exception as e:
+            print("Unable to set Dock icon:", e)
+
     window = PDFMergerApp()
     window.show()
     sys.exit(app.exec())
